@@ -18,8 +18,9 @@ composer require mehedi-iitdu/core-component-repository
 ## Usage
 
 ``` php
-// Usage description here
+    MehediIitdu\CoreComponentRepository\CoreComponentRepositoryServiceProvider::class
 ```
+Add this line under providers array in config/app.php
 
 ### Testing
 
