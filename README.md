@@ -16,11 +16,10 @@ composer require mehedi-iitdu/core-component-repository
 ```
 
 ## Usage
-
-``` php
-    MehediIitdu\CoreComponentRepository\CoreComponentRepositoryServiceProvider::class
-```
 Add this line under providers array in config/app.php
+``` php
+MehediIitdu\CoreComponentRepository\CoreComponentRepositoryServiceProvider::class
+```
 
 ### Testing
 
