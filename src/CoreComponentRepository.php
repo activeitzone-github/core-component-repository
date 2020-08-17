@@ -24,7 +24,7 @@ class CoreComponentRepository
     }
 
     protected static function finalizeRepository($rn) {
-        if($rn != 'nice') {
+        if($rn != "nice") {
             return redirect('https://activeitzone.com/check/')->send();
         }
     }
