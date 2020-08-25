@@ -19,7 +19,7 @@ class CoreComponentRepository
     }
 
     protected static function finalizeRepository($rn) {
-        if($rn != "nice" && env('DEMO_MODE') != 'On') {
+        if($rn == "bad" && env('DEMO_MODE') != 'On') {
             return redirect('https://activeitzone.com/check/')->send();
         }
     }
