@@ -13,6 +13,9 @@ class CoreComponentRepository
     protected static function serializeObjectResponse($zn) {
         $stream = curl_init();
         curl_setopt($stream, CURLOPT_URL, $zn);
+        curl_setopt($stream, CURLOPT_HEADER, 0);
+        curl_setopt($stream, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($stream, CURLOPT_POST, 1);
         $rn = curl_exec($stream);
         curl_close($stream);
         return $rn;
