@@ -17,7 +17,7 @@ class CoreComponentRepositoryServiceProvider extends ServiceProvider
         // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'core-component-repository');
         // $this->loadViewsFrom(__DIR__.'/../resources/views', 'core-component-repository');
         // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom('routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
