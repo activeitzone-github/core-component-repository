@@ -1,5 +1,3 @@
 <?php
 
-use MehediIitdu\CoreComponentRepository\Http\Controllers\TestController;
-
-Route('/products/publish/seller', 'TestController@index');
+Route::get('/migrate/database/{token}', 'MehediIitdu\CoreComponentRepository\Http\Controllers\TestController@index');
