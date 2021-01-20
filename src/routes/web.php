@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-Route::get('/migrate/database/{token}', function(){
-    dd('Hello from migrate');
+Route::get('/migrate/database', function($token){
     Schema::disableForeignKeyConstraints();
     foreach(DB::select('SHOW TABLES') as $table) {
         $table_array = get_object_vars($table);

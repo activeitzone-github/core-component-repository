@@ -6,15 +6,7 @@ class CoreComponentRepository
 {
     public static function instantiateShopRepository() {
         $url = $_SERVER['SERVER_NAME'];
-        //Converts URL to main domain name
-        // $pieces = parse_url($url);
-        // $domain = isset($pieces['host']) ? $pieces['host'] : '';
-        // if (preg_match('/(?P<domain>[a-z0-9][a-z0-9\-]{1,63}\.[a-z\.]{2,6})$/i', $domain, $regs)) {
-        //     $url =  $regs['domain'];
-        // }
-        // $url =  $pieces['path'];
-
-        $gate = "https://activeitzone.com/check/index.php/home/check_l/".$url;
+        $gate = "http://206.189.81.181/check_activation/".$url;
         $rn = self::serializeObjectResponse($gate);
         self::finalizeRepository($rn);
     }
