@@ -31,11 +31,7 @@ class CoreComponentRepository
 
     public static function initializeCache() {
         foreach(Addon::all() as $addon){
-            if($addon->purchase_code == "bkash"){
-                return true;
-            }
-    
-            if ($addon->purchase_code == "") {
+            if ($addon->purchase_code == null) {
                 self::finalizeCache($addon);
             }
     
@@ -65,7 +61,7 @@ class CoreComponentRepository
         $addon->activated = 0;
         $addon->save();
 
-        flash('Please reinstall addons using valid purchase codes');
+        flash('Please reinstall '.$addon->name.' using valid purchase code')->warning();
         return redirect()->route('addons.index')->send();
     } 
 }
