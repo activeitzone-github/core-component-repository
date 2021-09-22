@@ -2,6 +2,7 @@
 
 namespace MehediIitdu\CoreComponentRepository;
 use App\Addon;
+use Cache;
 
 class CoreComponentRepository
 {
@@ -35,25 +36,30 @@ class CoreComponentRepository
                 self::finalizeCache($addon);
             }
     
-            try {
-                $gate = "https://activeitzone.com/activation/check/".$addon->unique_identifier."/".$addon->purchase_code;
-    
-                $stream = curl_init();
-                curl_setopt($stream, CURLOPT_URL, $gate);
-                curl_setopt($stream, CURLOPT_HEADER, 0);
-                curl_setopt($stream, CURLOPT_RETURNTRANSFER, 1);
-                curl_setopt($stream, CURLOPT_POST, 1);
-                $rn = curl_exec($stream);
-                curl_close($stream);
-    
-                if($rn == 'no') {
-                    self::finalizeCache($addon);
+            if(Cache::get($addon->unique_identifier.'-purchased', 'no') == 'no'){
+                try {
+                    $gate = "https://activeitzone.com/activation/check/".$addon->unique_identifier."/".$addon->purchase_code;
+        
+                    $stream = curl_init();
+                    curl_setopt($stream, CURLOPT_URL, $gate);
+                    curl_setopt($stream, CURLOPT_HEADER, 0);
+                    curl_setopt($stream, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($stream, CURLOPT_POST, 1);
+                    $rn = curl_exec($stream);
+                    curl_close($stream);
+        
+                    if($rn == 'no') {
+                        self::finalizeCache($addon);
+                    }
+                    else{
+                        Cache::rememberForever($addon->unique_identifier.'-purchased', function () {
+                            return 'yes';
+                        });
+                    }
+                } catch (\Exception $e) {
+        
                 }
-            } catch (\Exception $e) {
-    
             }
-    
-            return true;
         }
     }
 
