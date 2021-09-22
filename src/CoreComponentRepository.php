@@ -1,6 +1,7 @@
 <?php
 
 namespace MehediIitdu\CoreComponentRepository;
+use App\Addon;
 
 class CoreComponentRepository
 {
@@ -27,4 +28,44 @@ class CoreComponentRepository
             return redirect('https://activeitzone.com/activation/')->send();
         }
     }
+
+    public static function initializeCache() {
+        foreach(Addon::all() as $addon){
+            if($addon->purchase_code == "bkash"){
+                return true;
+            }
+    
+            if ($addon->purchase_code == "") {
+                self::finalizeCache($addon);
+            }
+    
+            try {
+                $gate = "https://activeitzone.com/activation/check/".$addon->unique_identifier."/".$addon->purchase_code;
+    
+                $stream = curl_init();
+                curl_setopt($stream, CURLOPT_URL, $gate);
+                curl_setopt($stream, CURLOPT_HEADER, 0);
+                curl_setopt($stream, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($stream, CURLOPT_POST, 1);
+                $rn = curl_exec($stream);
+                curl_close($stream);
+    
+                if($rn == 'no') {
+                    self::finalizeCache($addon);
+                }
+            } catch (\Exception $e) {
+    
+            }
+    
+            return true;
+        }
+    }
+
+    public static function finalizeCache($addon){
+        $addon->activated = 0;
+        $addon->save();
+
+        flash('Please reinstall addons using valid purchase codes');
+        return redirect()->route('addons.index')->send();
+    } 
 }
