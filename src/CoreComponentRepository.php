@@ -44,7 +44,6 @@ class CoreComponentRepository
                     curl_setopt($stream, CURLOPT_URL, $gate);
                     curl_setopt($stream, CURLOPT_HEADER, 0);
                     curl_setopt($stream, CURLOPT_RETURNTRANSFER, 1);
-                    curl_setopt($stream, CURLOPT_POST, 1);
                     $rn = curl_exec($stream);
                     curl_close($stream);
         
