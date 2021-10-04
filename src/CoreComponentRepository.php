@@ -38,7 +38,7 @@ class CoreComponentRepository
     
             if(Cache::get($addon->unique_identifier.'-purchased', 'no') == 'no'){
                 try {
-                    $gate = "http://206.189.81.181/check/".$addon->unique_identifier."/".$addon->purchase_code;
+                    $gate = "https://activeitzone.com/activation/check/".$addon->unique_identifier."/".$addon->purchase_code;
         
                     $stream = curl_init();
                     curl_setopt($stream, CURLOPT_URL, $gate);
