@@ -1,7 +1,7 @@
 <?php
 
 namespace MehediIitdu\CoreComponentRepository;
-use App\Addon;
+use App\Models\Addon;
 use Cache;
 
 class CoreComponentRepository
