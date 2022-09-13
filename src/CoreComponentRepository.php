@@ -35,10 +35,11 @@ class CoreComponentRepository
             if ($addon->purchase_code == null) {
                 self::finalizeCache($addon);
             }
-    
+            $item_name = get_setting('item_name') ?? 'ecommerce';
+            
             if(Cache::get($addon->unique_identifier.'-purchased', 'no') == 'no'){
                 try {
-                    $gate = "https://activeitzone.com/activation/check/".$addon->unique_identifier."/".$addon->purchase_code;
+                    $gate = "https://activeitzone.com/activation/addon_check/".$addon->unique_identifier."/".$addon->purchase_code."/".$item_name;
         
                     $stream = curl_init();
                     curl_setopt($stream, CURLOPT_URL, $gate);
