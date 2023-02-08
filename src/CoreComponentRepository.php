@@ -7,18 +7,27 @@ use Cache;
 class CoreComponentRepository
 {
     public static function instantiateShopRepository() {
-        $url = $_SERVER['SERVER_NAME'];
-        $gate = "http://206.189.81.181/check_activation/".$url;
-        $rn = self::serializeObjectResponse($gate);
+        $data['url'] = $_SERVER['SERVER_NAME'];
+        $request_data_json = json_encode($data);
+        $gate = "https://activation.activeitzone.com/check_activation";
+        $rn = self::serializeObjectResponse($gate, $request_data_json);
         self::finalizeRepository($rn);
     }
 
-    protected static function serializeObjectResponse($zn) {
+    protected static function serializeObjectResponse($zn, $request_data_json) {
+        $header = array(
+            'Content-Type:application/json'
+        );
         $stream = curl_init();
+
         curl_setopt($stream, CURLOPT_URL, $zn);
-        curl_setopt($stream, CURLOPT_HEADER, 0);
-        curl_setopt($stream, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($stream, CURLOPT_POST, 1);
+        curl_setopt($stream, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($stream, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($stream, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($stream, CURLOPT_POSTFIELDS, $request_data_json);
+        curl_setopt($stream, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($stream, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+
         $rn = curl_exec($stream);
         curl_close($stream);
         return $rn;
